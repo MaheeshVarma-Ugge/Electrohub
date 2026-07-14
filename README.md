@@ -1,3 +1,7 @@
+# ElectroHub Frontend
+
+https://maheeshvarma-ugge.github.io/Electrohub/
+
 # ElectroHub Backend
 
 A RESTful backend application built using **Node.js**, **Express.js**, and **MongoDB** for managing an e-commerce platform. The backend provides APIs for handling customer orders, seller products, customer messages, user profiles, and seller profiles while serving the frontend application from the `public` directory.
