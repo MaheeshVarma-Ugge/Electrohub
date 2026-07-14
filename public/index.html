@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ElectroHub — Premium Electronics Marketplace</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h2 class="sr-only">ElectroHub — premium electronics marketplace with login, user, seller, and admin dashboards</h2>
+
+<div class="orb-bg"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+
+<!-- LOGIN -->
+<div id="ls" class="screen active">
+  <div class="lp-scan"></div>
+  <div class="lp-grid"></div>
+  <div class="lp-inner">
+
+    <!-- Left branding panel -->
+    <div class="lp-left">
+      <div class="lp-brand">
+        <div class="lp-brand-name">Electro<br>Hub</div>
+        <div class="lp-brand-sub">Electronics Marketplace</div>
+        <div class="lp-brand-tag">Manage your store, track sales, and grow your business — all in one place.</div>
+        <div class="lp-pills">
+          <div class="lp-pill"><div class="lp-pill-dot" style="background:#00f5a0"></div><span>3,200+ products</span></div>
+          <div class="lp-pill"><div class="lp-pill-dot" style="background:#06b6d4"></div><span>84 sellers</span></div>
+          <div class="lp-pill"><div class="lp-pill-dot" style="background:#8b5cf6"></div><span>1,248 users</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right login card -->
+    <div class="lp-right">
+      <div class="login-wrap">
+        <div class="lcard">
+          <div class="llogo"><div class="llogo-mark">⚡</div><div class="llogo-name">Electro<span>Hub</span></div></div>
+          <p class="lsub">Sign in to your dashboard</p>
+          <div class="lfield"><label>Email</label><input id="lemail" type="email" placeholder="you@example.com"></div>
+          <div class="lfield"><label>Password</label><input id="lpass" type="password" placeholder="••••••••"></div>
+          <span class="role-label">Select role</span>
+          <div class="roles">
+            <button class="role-btn on" data-r="user" onclick="selRole(this,'user')">👤 User</button>
+            <button class="role-btn" data-r="seller" onclick="selRole(this,'seller')">🏪 Seller</button>
+            <button class="role-btn" data-r="admin" onclick="selRole(this,'admin')">🛡 Admin</button>
+          </div>
+          <button class="lbtn" onclick="doLogin()">Sign in →</button>
+          <div class="llinks"><a>Forgot password?</a><a onclick="toast('Registration opens soon')">Create account</a></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- USER SCREEN -->
+<div id="us" class="screen">
+  <div class="shell">
+    <div class="sb">
+      <div class="sb-logo"><div class="sb-logo-row"><div class="sb-mark">⚡</div><div class="sb-name">Electro<span>Hub</span></div></div></div>
+      <div class="sb-badge user">Customer</div>
+      <nav class="sb-nav">
+        <div class="sb-sec">Browse</div>
+        <div class="ni on" onclick="sw('u','uhome',this)"><i class="ni-icon ti ti-home" aria-hidden="true"></i>Home</div>
+        <div class="ni" onclick="sw('u','ucats',this)"><i class="ni-icon ti ti-category" aria-hidden="true"></i>Categories</div>
+        <div class="ni" onclick="sw('u','uall',this)"><i class="ni-icon ti ti-layout-grid" aria-hidden="true"></i>All products</div>
+        <div class="ni" id="ni-uposts" onclick="sw('u','uposts',this);renderPostsGrid()"><i class="ni-icon ti ti-tag" aria-hidden="true"></i>Product Posts</div>
+        <div class="sb-sec">My account</div>
+        <div class="ni" onclick="sw('u','uwish',this)"><i class="ni-icon ti ti-heart" aria-hidden="true"></i>Wishlist<span class="ni-badge" id="wc">0</span></div>
+        <div class="ni" onclick="sw('u','ucart',this)"><i class="ni-icon ti ti-shopping-cart" aria-hidden="true"></i>Cart<span class="ni-badge" id="cc">0</span></div>
+        <div class="ni" id="ni-uorders" onclick="sw('u','uorders',this)"><i class="ni-icon ti ti-package" aria-hidden="true"></i>Orders</div>
+        <div class="ni" id="ni-umsg" onclick="sw('u','umsg',this);renderUserMessages()"><i class="ni-icon ti ti-mail" aria-hidden="true"></i>Admin Message<span class="ni-badge" id="u-msgbadge">0</span></div>
+        <div class="ni" onclick="sw('u','uprof',this)"><i class="ni-icon ti ti-user" aria-hidden="true"></i>Profile</div>
+      </nav>
+      <div class="sb-foot"><div class="sb-user"><div class="sb-av" id="sb-av-u">UM</div><div><div class="sb-uname" id="sb-uname-u">Ugge Maheesh Varma</div><div class="sb-uemail" id="sb-uemail-u">maheeshvarmau@gmail.com</div></div><button class="sb-logout" onclick="logout()" aria-label="Sign out"><i class="ti ti-logout"></i></button></div>
+        <button class="btn btn-g" style="width:100%;justify-content:center;margin-top:10px" onclick="logout()"><i class="ti ti-logout" aria-hidden="true"></i>Logout</button>
+      </div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <span class="tb-title">ElectroHub</span>
+        <input class="tb-search" placeholder="Search products, brands…" oninput="filterP(this.value)">
+        <div class="tb-acts">
+          <button class="tb-ico" aria-label="Notifications"><i class="ti ti-bell"></i><span class="ndot"></span></button>
+          <div class="tb-av" id="tb-av-u" onclick="sw('u','uprof',null)">UM</div>
+        </div>
+      </div>
+      <!-- HOME -->
+      <div class="pg on" id="u-uhome">
+        <div class="pgbread"><i class="ti ti-home" style="font-size:13px" aria-hidden="true"></i><span>Home</span></div>
+        <div class="hero">
+          <div class="hero-glow"></div>
+          <div class="hero-eyebrow">⚡ ElectroHub 2026</div>
+          <div class="hero-h">The future of<br>electronics is here</div>
+          <div class="hero-sub">Top brands. Unbeatable prices. Lightning-fast delivery to your door.</div>
+          <button class="btn btn-p" onclick="sw('u','uall',null)">Shop now <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+        </div>
+        <div class="stat-grid">
+          <div class="scard"><div class="scard-icon" style="background:rgba(99,102,241,0.15)"><i class="ti ti-box" style="color:var(--c1);font-size:20px" aria-hidden="true"></i></div><div class="scard-val">3,200+</div><div class="scard-label">Products available</div></div>
+          <div class="scard"><div class="scard-icon" style="background:rgba(16,185,129,0.12)"><i class="ti ti-truck" style="color:#34d399;font-size:20px" aria-hidden="true"></i></div><div class="scard-val">Free</div><div class="scard-label">Delivery above ₹999</div></div>
+          <div class="scard"><div class="scard-icon" style="background:rgba(245,158,11,0.12)"><i class="ti ti-star" style="color:#fbbf24;font-size:20px" aria-hidden="true"></i></div><div class="scard-val">4.8</div><div class="scard-label">Average rating</div></div>
+          <div class="scard"><div class="scard-icon" style="background:rgba(6,182,212,0.12)"><i class="ti ti-refresh" style="color:var(--c3);font-size:20px" aria-hidden="true"></i></div><div class="scard-val">7 days</div><div class="scard-label">Easy returns</div></div>
+        </div>
+        <div class="sh"><span class="sh-title">Featured products</span><button class="sh-link" onclick="sw('u','uall',null)">View all →</button></div>
+        <div class="fbar" id="uf-bar">
+          <button class="chip on" onclick="fcat('all',this)">All</button>
+          <button class="chip" onclick="fcat('Mobile Phones',this)">Phones</button>
+          <button class="chip" onclick="fcat('Laptops',this)">Laptops</button>
+          <button class="chip" onclick="fcat('Headphones',this)">Audio</button>
+          <button class="chip" onclick="fcat('Smart Watches',this)">Wearables</button>
+          <button class="chip" onclick="fcat('Cameras',this)">Cameras</button>
+        </div>
+        <div class="pgrid" id="hp-grid"></div>
+      </div>
+      <!-- CATEGORIES -->
+      <div class="pg" id="u-ucats">
+        <div class="pgbread"><i class="ti ti-home" style="font-size:13px" aria-hidden="true"></i><span>Categories</span></div>
+        <div class="sh"><span class="sh-title">All categories</span></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px" id="cats-grid"></div>
+      </div>
+      <!-- ALL PRODUCTS -->
+      <div class="pg" id="u-uall">
+        <div class="pgbread"><i class="ti ti-home" style="font-size:13px" aria-hidden="true"></i><span>All products</span></div>
+        <div style="display:flex;gap:10px;margin-bottom:14px;align-items:center;flex-wrap:wrap">
+          <span class="sh-title" style="margin-bottom:0">All products</span>
+          <select style="margin-left:auto;padding:7px 12px;background:var(--glass2);border:1px solid var(--border-g);border-radius:var(--r);font-size:12px;color:var(--txt);font-family:var(--ff);outline:none" onchange="sortP(this.value)">
+            <option value="">Sort: Default</option><option value="pl">Price: low to high</option><option value="ph">Price: high to low</option><option value="r">Top rated</option>
+          </select>
+        </div>
+        <div class="fbar">
+          <button class="chip on" onclick="fcat('all',this)">All</button>
+          <button class="chip" onclick="fcat('Mobile Phones',this)">Phones</button>
+          <button class="chip" onclick="fcat('Laptops',this)">Laptops</button>
+          <button class="chip" onclick="fcat('Headphones',this)">Audio</button>
+          <button class="chip" onclick="fcat('Smart Watches',this)">Wearables</button>
+          <button class="chip" onclick="fcat('Cameras',this)">Cameras</button>
+        </div>
+        <div class="pgrid" id="all-grid"></div>
+      </div>
+      <!-- PRODUCT DETAILS -->
+      <div class="pg" id="u-pdetail">
+        <div class="pgbread"><span class="sh-link" style="cursor:pointer" onclick="sw('u','uall',null)">← Back to products</span></div>
+        <div id="pdetail-content"></div>
+      </div>
+      <!-- PRODUCT POSTS (seller-posted products) -->
+      <div class="pg" id="u-uposts">
+        <div class="pgbread"><span>Product Posts</span></div>
+        <div class="sh"><span class="sh-title">Products posted by sellers</span></div>
+        <div class="pgrid" id="posts-grid"></div>
+        <div id="posts-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--txt3)">
+          <i class="ti ti-tag" style="font-size:40px;display:block;margin-bottom:12px;opacity:.3" aria-hidden="true"></i>
+          <div style="font-size:15px;font-weight:600;color:var(--txt2);margin-bottom:6px">No products posted yet</div>
+          <div style="font-size:13px">Check back soon — sellers are adding new products.</div>
+        </div>
+      </div>
+      <!-- PRODUCT POST DETAIL -->
+      <div class="pg" id="u-postdetail">
+        <div class="pgbread"><span class="sh-link" style="cursor:pointer" onclick="sw('u','uposts',null)">← Back to product posts</span></div>
+        <div id="postdetail-content"></div>
+      </div>
+      <!-- WISHLIST -->
+      <div class="pg" id="u-uwish">
+        <div class="pgbread"><span>Wishlist</span></div>
+        <div class="sh"><span class="sh-title">Your wishlist</span></div>
+        <div class="pgrid" id="wish-grid"></div>
+        <div id="wish-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--txt3)"><i class="ti ti-heart" style="font-size:40px;display:block;margin-bottom:12px;opacity:.3" aria-hidden="true"></i><div style="font-size:15px;font-weight:600;color:var(--txt2);margin-bottom:6px">Your wishlist is empty</div><div style="font-size:13px">Save products you love</div></div>
+      </div>
+      <!-- CART -->
+      <div class="pg" id="u-ucart">
+        <div class="pgbread"><span>Cart</span></div>
+        <div class="sh"><span class="sh-title">Shopping cart</span></div>
+        <div id="cart-list"></div>
+        <div id="cart-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--txt3)"><i class="ti ti-shopping-cart" style="font-size:40px;display:block;margin-bottom:12px;opacity:.3" aria-hidden="true"></i><div style="font-size:15px;font-weight:600;color:var(--txt2);margin-bottom:6px">Your cart is empty</div></div>
+        <div id="cart-sum" style="display:none;background:var(--glass);border:1px solid var(--border-g);border-radius:var(--r2);padding:20px;max-width:380px;margin-top:6px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px"><span style="color:var(--txt2)">Subtotal</span><span id="csubt" style="color:var(--txt)">₹0</span></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:14px;font-size:13px"><span style="color:var(--txt2)">Shipping</span><span style="color:#34d399">Free</span></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:18px;font-size:16px;font-weight:800;border-top:1px solid var(--border-g);padding-top:12px"><span style="color:var(--txt)">Total</span><span id="ctot" style="background:linear-gradient(90deg,var(--c1),var(--c3));-webkit-background-clip:text;-webkit-text-fill-color:transparent">₹0</span></div>
+          <button class="btn btn-p" style="width:100%;justify-content:center;padding:12px" onclick="placeOrder()">Checkout →</button>
+        </div>
+      </div>
+      <!-- ORDERS -->
+      <div class="pg" id="u-uorders">
+        <div class="pgbread"><span>Orders</span></div>
+        <div class="sh"><span class="sh-title">Your orders</span></div>
+        <div class="tcard">
+          <table class="dtbl">
+            <thead><tr><th>Order</th><th>Product</th><th>Amount</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="orders-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- ADMIN MESSAGES (USER) -->
+      <div class="pg" id="u-umsg">
+        <div class="pgbread"><span>Admin Message</span></div>
+        <span class="sh-title" style="display:block;margin-bottom:16px">Messages from Admin (<span id="u-msgcount">0</span>)</span>
+        <div id="u-msglist"></div>
+      </div>
+      <!-- PROFILE -->
+      <div class="pg" id="u-uprof">
+        <div class="pgbread"><span>Profile</span></div>
+        <div class="profile-card">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px">
+            <div class="av-big" id="prof-av">UM</div>
+            <div><div style="font-size:17px;font-weight:700;color:var(--txt)" id="prof-name-disp">Ugge Maheesh Varma</div><div style="font-size:12px;color:var(--txt3)" id="prof-email-disp">maheeshvarmau@gmail.com</div></div>
+            <button class="btn btn-p" style="margin-left:auto" onclick="saveProfile()">Save changes</button>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="frow"><label>Full name</label><input id="pf-name" value="Ugge Maheesh Varma"></div>
+            <div class="frow"><label>Email</label><input id="pf-email" value="maheeshvarmau@gmail.com"></div>
+            <div class="frow"><label>Phone</label><input id="pf-phone" value="+91 98765 43210"></div>
+            <div class="frow"><label>City</label><input id="pf-city" value="Hyderabad"></div>
+            <div class="frow" style="grid-column:span 2"><label>Address</label><input id="pf-address" value="123 Tech Street, Madhapur, Hyderabad 500081"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SELLER SCREEN -->
+<div id="ss" class="screen">
+  <div class="shell">
+    <div class="sb">
+      <div class="sb-logo"><div class="sb-logo-row"><div class="sb-mark">⚡</div><div class="sb-name">Electro<span>Hub</span></div></div></div>
+      <div class="sb-badge seller">Seller</div>
+      <nav class="sb-nav">
+        <div class="sb-sec">Overview</div>
+        <div class="ni on" onclick="sw('s','sdash',this)"><i class="ni-icon ti ti-chart-bar" aria-hidden="true"></i>Dashboard</div>
+        <div class="ni" id="ni-saddprod" onclick="openAddProd()"><i class="ni-icon ti ti-plus" aria-hidden="true"></i>Add Product</div>
+        <div class="ni" onclick="sw('s','sprods',this)"><i class="ni-icon ti ti-box" aria-hidden="true"></i>My products</div>
+        <div class="ni" onclick="sw('s','sorders',this);renderSellerOrders()"><i class="ni-icon ti ti-shopping-bag" aria-hidden="true"></i>Orders<span class="ni-badge" id="s-orderbadge">0</span></div>
+        <div class="ni" id="ni-smsg" onclick="sw('s','smsg',this);renderSellerMessages()"><i class="ni-icon ti ti-mail" aria-hidden="true"></i>Admin Message<span class="ni-badge" id="s-msgbadge">0</span></div>
+        <div class="sb-sec">Account</div>
+        <div class="ni" onclick="sw('s','sshop',this)"><i class="ni-icon ti ti-store" aria-hidden="true"></i>Shop profile</div>
+        <div class="ni" onclick="sw('s','sanalytics',this)"><i class="ni-icon ti ti-trending-up" aria-hidden="true"></i>Analytics</div>
+      </nav>
+      <div class="sb-foot"><div class="sb-user"><div class="sb-av" id="sb-av-s" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">TS</div><div><div class="sb-uname" id="sb-uname-s">Tech Store</div><div class="sb-uemail" id="sb-uemail-s">seller@electrohub.com</div></div><button class="sb-logout" onclick="logout()" aria-label="Sign out"><i class="ti ti-logout"></i></button></div>
+        <button class="btn btn-g" style="width:100%;justify-content:center;margin-top:10px" onclick="logout()"><i class="ti ti-logout" aria-hidden="true"></i>Logout</button>
+      </div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <span class="tb-title">Seller dashboard</span>
+        <div class="tb-acts">
+          <button class="btn btn-p" onclick="openAddProd()"><i class="ti ti-plus" aria-hidden="true"></i>Add product</button>
+          <button class="tb-ico" aria-label="Notifications"><i class="ti ti-bell"></i><span class="ndot"></span></button>
+          <div class="tb-av" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">TS</div>
+        </div>
+      </div>
+      <div class="pg on" id="s-sdash">
+        <div class="pgbread"><span>Dashboard</span></div>
+        <div class="stat-grid">
+          <div class="scard"><div class="scard-icon" style="background:rgba(99,102,241,0.15)"><i class="ti ti-box" style="color:var(--c1);font-size:20px" aria-hidden="true"></i></div><div class="scard-val">42</div><div class="scard-label">Total products</div><div class="scard-delta delta-up">↑ 5 this month</div></div>
+          <div class="scard"><div class="scard-icon" style="background:rgba(245,158,11,0.12)"><i class="ti ti-shopping-bag" style="color:#fbbf24;font-size:20px" aria-hidden="true"></i></div><div class="scard-val">128</div><div class="scard-label">Total orders</div><div class="scard-delta delta-up">↑ 12% this week</div></div>
+          <div class="scard"><div class="scard-icon" style="background:rgba(16,185,129,0.12)"><i class="ti ti-currency-rupee" style="color:#34d399;font-size:20px" aria-hidden="true"></i></div><div class="scard-val">₹2.4L</div><div class="scard-label">Revenue</div><div class="scard-delta delta-up">↑ 18% this month</div></div>
+          <div class="scard"><div class="scard-icon" style="background:rgba(245,158,11,0.12)"><i class="ti ti-star" style="color:#fbbf24;font-size:20px" aria-hidden="true"></i></div><div class="scard-val">4.7</div><div class="scard-label">Shop rating</div><div class="scard-delta delta-up">↑ 0.2 this month</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="gcard" style="padding:20px">
+            <div class="sh"><span class="sh-title">Monthly revenue</span></div>
+            <div class="rev-chart-wrap" id="s-revchart"></div>
+            <div class="rev-labels" id="s-revlbls"></div>
+          </div>
+          <div class="tcard">
+            <div style="padding:14px 18px;border-bottom:1px solid var(--border-g)"><span class="sh-title">Recent orders</span></div>
+            <table class="dtbl">
+              <thead><tr><th>Product</th><th>Amount</th><th>Status</th></tr></thead>
+              <tbody id="s-recorders-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="pg" id="s-sprods">
+        <div class="pgbread"><span>My products</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <span class="sh-title" id="s-prodcount">My products (0)</span>
+          <button class="btn btn-p" onclick="openAddProd()"><i class="ti ti-plus" aria-hidden="true"></i>Add product</button>
+        </div>
+        <div class="tcard"><table class="dtbl"><thead><tr><th>Product</th><th>Price</th><th>Rating</th><th>Contact</th><th>Actions</th></tr></thead><tbody id="s-ptbl"></tbody></table></div>
+      </div>
+      <div class="pg" id="s-sorders">
+        <div class="pgbread"><span>Orders</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <span class="sh-title" id="s-ordercount">Orders (0)</span>
+          <button class="btn btn-g btn-sm" onclick="clearAllOrders()"><i class="ti ti-trash" aria-hidden="true"></i>Clear all orders</button>
+        </div>
+        <div class="tcard" style="overflow-x:auto"><table class="dtbl"><thead><tr><th>Order</th><th>Customer</th><th>Item</th><th>Price</th><th>Address</th><th>Ordered</th><th>Expected delivery</th><th>Payment</th><th>Status</th><th>Actions</th></tr></thead><tbody id="s-orders-tbody"></tbody></table></div>
+      </div>
+      <div class="pg" id="s-smsg">
+        <div class="pgbread"><span>Admin Message</span></div>
+        <span class="sh-title" style="display:block;margin-bottom:16px">Messages from Admin (<span id="s-msgcount">0</span>)</span>
+        <div id="s-msglist"></div>
+      </div>
+      <div class="pg" id="s-sshop">
+        <div class="pgbread"><span>Shop profile</span></div>
+        <div class="profile-card">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="frow"><label>Shop name</label><input id="s-shopname" value="Tech Store India"></div>
+            <div class="frow"><label>Contact</label><input id="s-shopcontact" value="+91 98765 43210"></div>
+            <div class="frow"><label>Email</label><input id="s-shopemail" value="seller@electrohub.com"></div>
+            <div class="frow"><label>City</label><input id="s-shopcity" value="Hyderabad"></div>
+            <div class="frow" style="grid-column:span 2"><label>Address</label><input id="s-shopaddress" value="456 Electronics Zone, Secunderabad 500003"></div>
+          </div>
+          <button class="btn btn-p" style="margin-top:14px" onclick="saveSellerProfile()">Save profile</button>
+        </div>
+      </div>
+      <div class="pg" id="s-sanalytics">
+        <div class="pgbread"><span>Analytics</span></div>
+        <div class="stat-grid">
+          <div class="scard"><div class="scard-val">₹2,40,000</div><div class="scard-label">Total revenue</div><div class="scard-delta delta-up">↑ 18%</div></div>
+          <div class="scard"><div class="scard-val">128</div><div class="scard-label">Total orders</div><div class="scard-delta delta-up">↑ 12%</div></div>
+          <div class="scard"><div class="scard-val">₹1,875</div><div class="scard-label">Avg order value</div><div class="scard-delta delta-up">↑ 5%</div></div>
+          <div class="scard"><div class="scard-val">94%</div><div class="scard-label">Satisfaction</div><div class="scard-delta delta-up">↑ 2%</div></div>
+        </div>
+        <div class="tcard">
+          <div style="padding:14px 18px;border-bottom:1px solid var(--border-g)"><span class="sh-title">Top products by sales</span></div>
+          <div style="padding:16px">
+            <div class="bar-row"><span class="bar-lbl">Galaxy S24</span><div class="bar-track"><div class="bar-fill" style="width:85%;background:linear-gradient(90deg,var(--c1),var(--c2))">34 sold</div></div><span class="bar-val">₹2.5M</span></div>
+            <div class="bar-row"><span class="bar-lbl">MacBook M3</span><div class="bar-track"><div class="bar-fill" style="width:62%;background:linear-gradient(90deg,var(--c2),#a855f7)">18 sold</div></div><span class="bar-val">₹2.1M</span></div>
+            <div class="bar-row"><span class="bar-lbl">Sony WH-XM5</span><div class="bar-track"><div class="bar-fill" style="width:46%;background:linear-gradient(90deg,var(--c3),#22d3ee)">29 sold</div></div><span class="bar-val">₹841K</span></div>
+            <div class="bar-row"><span class="bar-lbl">iPad Air</span><div class="bar-track"><div class="bar-fill" style="width:30%;background:linear-gradient(90deg,#10b981,#34d399)">12 sold</div></div><span class="bar-val">₹720K</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- ADD PRODUCT PAGE -->
+      <div class="pg" id="s-saddprod">
+        <div class="pgbread"><span>Add Product</span></div>
+        <div class="tcard" style="max-width:640px;padding:24px;margin-bottom:24px">
+          <div class="sh-title" style="margin-bottom:16px">New product post</div>
+          <div id="np-imgprev" style="border:1px dashed rgba(99,102,241,0.3);border-radius:var(--r);padding:18px;text-align:center;cursor:pointer;color:var(--txt3);font-size:13px;margin-bottom:16px;transition:all .2s;overflow:hidden" onclick="document.getElementById('np-imgfile').click()" onmouseover="this.style.borderColor='var(--c1)'" onmouseout="this.style.borderColor='rgba(99,102,241,0.3)'">
+            <i class="ti ti-upload" style="font-size:22px;display:block;margin-bottom:6px;color:var(--c1)" aria-hidden="true"></i>Click to upload product image
+          </div>
+          <input type="file" id="np-imgfile" accept="image/*" style="display:none" onchange="previewNPImg(event)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="frow" style="grid-column:span 2"><label>Product name</label><input id="np-name" placeholder="e.g. Samsung Galaxy S24"></div>
+            <div class="frow" style="grid-column:span 2"><label>Product description</label><textarea id="np-desc" rows="3" placeholder="Describe the product…"></textarea></div>
+            <div class="frow"><label>Product rating (1–5)</label><input id="np-rating" type="number" min="1" max="5" step="0.1" placeholder="4.5"></div>
+            <div class="frow"><label>Price (₹)</label><input id="np-price" type="number" placeholder="74999"></div>
+            <div class="frow" style="grid-column:span 2"><label>Seller contact number</label><input id="np-contact" type="tel" placeholder="+91 98765 43210"></div>
+          </div>
+          <div style="margin-top:14px">
+            <div class="role-label">Payment options accepted</div>
+            <div class="fbar" id="np-payrow" style="margin-bottom:0">
+              <button type="button" class="chip on" data-pay="PhonePe" onclick="togglePay(this)">PhonePe</button>
+              <button type="button" class="chip on" data-pay="Google Pay" onclick="togglePay(this)">Google Pay</button>
+              <button type="button" class="chip on" data-pay="Paytm" onclick="togglePay(this)">Paytm</button>
+              <button type="button" class="chip on" data-pay="UPI" onclick="togglePay(this)">UPI</button>
+              <button type="button" class="chip" data-pay="Cash on Delivery" onclick="togglePay(this)">Cash on Delivery</button>
+            </div>
+          </div>
+          <button class="btn btn-p" id="np-savebtn" style="margin-top:18px" onclick="saveNewProduct()"><i class="ti ti-device-floppy" aria-hidden="true"></i>Save &amp; publish</button>
+        </div>
+        <div class="sh"><span class="sh-title">Your posted products</span></div>
+        <div class="tcard"><table class="dtbl"><thead><tr><th>Product</th><th>Price</th><th>Rating</th><th>Contact</th><th>Actions</th></tr></thead><tbody id="sp-posted-tbody"></tbody></table></div>
+      </div>
+      <!-- ADD PRODUCT MODAL -->
+      <div id="addprod-modal" style="display:none" class="pg on">
+        <div class="pgbread"><span>Add product</span></div>
+        <div class="modal-box" style="max-width:540px">
+          <div class="mhdr"><span class="mtitle">New product</span><button class="mclose" onclick="closeAddProd()"><i class="ti ti-x" aria-hidden="true"></i></button></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="frow"><label>Product name</label><input placeholder="e.g. Samsung Galaxy S24"></div>
+            <div class="frow"><label>Brand</label><input placeholder="e.g. Samsung"></div>
+            <div class="frow"><label>Category</label><select><option>Mobile Phones</option><option>Laptops</option><option>Headphones</option><option>Smart Watches</option><option>Cameras</option></select></div>
+            <div class="frow"><label>Price (₹)</label><input type="number" placeholder="74999"></div>
+            <div class="frow"><label>Stock</label><input type="number" placeholder="50"></div>
+            <div class="frow"><label>Discount (%)</label><input type="number" placeholder="10"></div>
+            <div class="frow" style="grid-column:span 2"><label>Description</label><textarea rows="2" placeholder="Product description…"></textarea></div>
+          </div>
+          <div style="border:1px dashed rgba(99,102,241,0.3);border-radius:var(--r);padding:18px;text-align:center;cursor:pointer;color:var(--txt3);font-size:13px;margin-top:4px;transition:all .2s" onmouseover="this.style.borderColor='var(--c1)'" onmouseout="this.style.borderColor='rgba(99,102,241,0.3)'" onclick="toast('Image upload ready')">
+            <i class="ti ti-upload" style="font-size:22px;display:block;margin-bottom:6px;color:var(--c1)" aria-hidden="true"></i>Upload product images
+          </div>
+          <div style="display:flex;gap:8px;margin-top:16px">
+            <button class="btn btn-g" style="flex:1;justify-content:center" onclick="closeAddProd()">Cancel</button>
+            <button class="btn btn-p" style="flex:2;justify-content:center" onclick="saveProd()">Publish product</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN SCREEN -->
+<div id="as" class="screen">
+  <div class="shell">
+    <div class="sb">
+      <div class="sb-logo"><div class="sb-logo-row"><div class="sb-mark">⚡</div><div class="sb-name">Electro<span>Hub</span></div></div></div>
+      <div class="sb-badge admin">Administrator</div>
+      <nav class="sb-nav">
+        <div class="sb-sec">Overview</div>
+        <div class="ni on" onclick="sw('a','adash',this);renderCatRevenue()"><i class="ni-icon ti ti-chart-pie" aria-hidden="true"></i>Dashboard</div>
+        <div class="sb-sec">Management</div>
+        <div class="ni" onclick="sw('a','ausers',this)"><i class="ni-icon ti ti-users" aria-hidden="true"></i>Users<span class="ni-badge">1248</span></div>
+        <div class="ni" onclick="sw('a','asellers',this)"><i class="ni-icon ti ti-store" aria-hidden="true"></i>Sellers<span class="ni-badge">84</span></div>
+        <div class="ni" onclick="sw('a','aproducts',this);renderAP()"><i class="ni-icon ti ti-box" aria-hidden="true"></i>Products</div>
+        <div class="ni" onclick="sw('a','aorders',this);renderAO()"><i class="ni-icon ti ti-shopping-bag" aria-hidden="true"></i>Orders</div>
+        <div class="sb-sec">System</div>
+        <div class="ni" onclick="sw('a','amsg',this);renderAdminMsgLog()"><i class="ni-icon ti ti-mail" aria-hidden="true"></i>Messages</div>
+        <div class="ni" onclick="sw('a','acats',this)"><i class="ni-icon ti ti-tag" aria-hidden="true"></i>Categories</div>
+      </nav>
+      <div class="sb-foot"><div class="sb-user"><div class="sb-av" style="background:linear-gradient(135deg,var(--c4),var(--c2))">AD</div><div><div class="sb-uname">Admin</div><div class="sb-uemail">admin@electrohub.com</div></div><button class="sb-logout" onclick="logout()" aria-label="Sign out"><i class="ti ti-logout"></i></button></div>
+        <button class="btn btn-g" style="width:100%;justify-content:center;margin-top:10px" onclick="logout()"><i class="ti ti-logout" aria-hidden="true"></i>Logout</button>
+      </div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <span class="tb-title">Admin panel</span>
+        <div class="tb-acts">
+          <span class="admin-pill">🛡 Admin mode</span>
+          <button class="tb-ico" aria-label="Notifications"><i class="ti ti-bell"></i><span class="ndot"></span></button>
+          <button class="tb-ico" onclick="logout()" aria-label="Sign out"><i class="ti ti-logout"></i></button>
+          <div class="tb-av" style="background:linear-gradient(135deg,var(--c4),var(--c2))">AD</div>
+        </div>
+      </div>
+      <div class="pg on" id="a-adash">
+        <div class="pgbread"><span>Admin dashboard</span></div>
+        <div class="stat-grid">
+          <div class="scard"><div class="scard-icon" style="background:rgba(99,102,241,0.15)"><i class="ti ti-users" style="color:var(--c1);font-size:20px" aria-hidden="true"></i></div><div class="scard-val">1,248</div><div class="scard-label">Total users</div><div class="scard-delta delta-up">↑ 23 today</div></div>
+          <div class="scard"><div class="scard-icon" style="background:rgba(245,158,11,0.12)"><i class="ti ti-store" style="color:#fbbf24;font-size:20px" aria-hidden="true"></i></div><div class="scard-val">84</div><div class="scard-label">Active sellers</div><div class="scard-delta delta-up">5 pending approval</div></div>
+          <div class="scard"><div class="scard-icon" style="background:rgba(16,185,129,0.12)"><i class="ti ti-box" style="color:#34d399;font-size:20px" aria-hidden="true"></i></div><div class="scard-val">3,204</div><div class="scard-label">Total products</div><div class="scard-delta delta-up">↑ 47 this week</div></div>
+          <div class="scard"><div class="scard-icon" style="background:rgba(139,92,246,0.15)"><i class="ti ti-shopping-bag" style="color:var(--c2);font-size:20px" aria-hidden="true"></i></div><div class="scard-val">892</div><div class="scard-label">Orders today</div><div class="scard-delta delta-up">↑ 15%</div></div>
+          <div class="scard"><div class="scard-icon" style="background:rgba(6,182,212,0.12)"><i class="ti ti-currency-rupee" style="color:var(--c3);font-size:20px" aria-hidden="true"></i></div><div class="scard-val">₹48.2L</div><div class="scard-label">Revenue (month)</div><div class="scard-delta delta-up">↑ 22%</div></div>
+          <div class="scard"><div class="scard-icon" style="background:rgba(244,63,94,0.12)"><i class="ti ti-activity" style="color:#fb7185;font-size:20px" aria-hidden="true"></i></div><div class="scard-val">94%</div><div class="scard-label">Active users</div><div class="scard-delta delta-up">↑ 2%</div></div>
+        </div>
+        <div class="tcard">
+          <div style="padding:14px 18px;border-bottom:1px solid var(--border-g);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+            <span class="sh-title">Revenue by category</span>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-p btn-sm" id="catrev-btn-monthly" onclick="setCatRevPeriod('monthly')">Monthly</button>
+              <button class="btn btn-g btn-sm" id="catrev-btn-yearly" onclick="setCatRevPeriod('yearly')">Yearly</button>
+            </div>
+          </div>
+          <div style="padding:16px" id="a-catrev"></div>
+        </div>
+      </div>
+      <div class="pg" id="a-ausers">
+        <div class="pgbread"><span>Users</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <span class="sh-title" id="a-usercount">All users (1,248)</span>
+          <input id="a-usersearch" placeholder="Search users…" oninput="renderAU(true)" style="padding:8px 13px;background:var(--glass2);border:1px solid var(--border-g);border-radius:var(--r);font-size:12px;color:var(--txt);font-family:var(--ff);outline:none">
+        </div>
+        <div class="tcard"><table class="dtbl"><thead><tr><th>User</th><th>Email</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead><tbody id="a-utbl"></tbody></table></div>
+        <div id="a-userpager" style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:16px"></div>
+      </div>
+      <div class="pg" id="a-asellers">
+        <div class="pgbread"><span>Sellers</span></div>
+        <span class="sh-title" style="display:block;margin-bottom:16px" id="a-sellercount">Sellers (84)</span>
+        <div class="tcard"><table class="dtbl"><thead><tr><th>Shop</th><th>Email</th><th>Products</th><th>Revenue</th><th>Status</th><th>Actions</th></tr></thead><tbody id="a-stbl"></tbody></table></div>
+        <div id="a-sellerpager" style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:16px"></div>
+      </div>
+      <div class="pg" id="a-aproducts">
+        <div class="pgbread"><span>Products</span></div>
+        <span class="sh-title" style="display:block;margin-bottom:16px" id="a-prodcount">All products (3,204)</span>
+        <div class="tcard"><table class="dtbl"><thead><tr><th>Product</th><th>Seller</th><th>Category</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead><tbody id="a-ptbl"></tbody></table></div>
+      </div>
+      <div class="pg" id="a-aorders">
+        <div class="pgbread"><span>Orders</span></div>
+        <span class="sh-title" style="display:block;margin-bottom:16px" id="a-ordercount">All orders (892)</span>
+        <div class="tcard" style="overflow-x:auto"><table class="dtbl"><thead><tr><th>Order</th><th>Customer</th><th>Product</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead><tbody id="a-otbl"></tbody></table></div>
+        <div id="a-orderpager" style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:16px"></div>
+      </div>
+      <div class="pg" id="a-amsg">
+        <div class="pgbread"><span>Messages</span></div>
+        <span class="sh-title" style="display:block;margin-bottom:16px">Send message</span>
+        <div class="profile-card" style="max-width:500px">
+          <div class="frow"><label>Send to</label><select id="msg-to" onchange="toggleMsgRecipient()">
+            <option value="all_users">All users</option>
+            <option value="all_sellers">All sellers</option>
+            <option value="user">Specific user</option>
+            <option value="seller">Specific seller</option>
+          </select></div>
+          <div class="frow" id="msg-recipient-row" style="display:none">
+            <label id="msg-recipient-label">Recipient name</label>
+            <input id="msg-recipient" list="msg-recipient-datalist" placeholder="Start typing a name…" autocomplete="off">
+            <datalist id="msg-recipient-datalist"></datalist>
+          </div>
+          <div class="frow"><label>Type</label><select id="msg-type"><option>Notification</option><option>Warning</option><option>Approval</option><option>Suspension notice</option></select></div>
+          <div class="frow"><label>Subject</label><input id="msg-subject" placeholder="Message subject"></div>
+          <div class="frow"><label>Message</label><textarea id="msg-body" rows="4" placeholder="Enter your message…"></textarea></div>
+          <button class="btn btn-p" style="margin-top:4px" onclick="sendAdminMessage()">Send message</button>
+        </div>
+        <span class="sh-title" style="display:block;margin:24px 0 16px">Sent messages</span>
+        <div class="tcard" id="a-msglog"></div>
+      </div>
+      <div class="pg" id="a-acats">
+        <div class="pgbread"><span>Categories</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <span class="sh-title">Categories (10)</span>
+          <button class="btn btn-p" onclick="toast('Add category')"><i class="ti ti-plus" aria-hidden="true"></i>Add category</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px" id="a-catsGrid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toastEl"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
